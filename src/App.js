@@ -11,6 +11,7 @@ import { createUser } from './services/userAPI';
 import Loading from './components/pages/Loading';
 import Header from './components/Header';
 import searchAlbumAPI from './services/searchAlbumsAPI';
+import ArtistCard from './components/ArtistCard';
 
 export default class App extends Component {
   constructor() {
@@ -54,12 +55,18 @@ export default class App extends Component {
       artistSearched: artistName,
     });
     const resultArtistSearch = await searchAlbumAPI(artistName);
-    const artistsCard = resultArtistSearch.map((result) => (<))
+    const artistsCard = resultArtistSearch.map((result, index) => (<ArtistCard
+      key={ index }
+      artistImage={ result.artworkUrl100 }
+      artistAlbum={ result.artistName }
+      artistName={ result.collectionName }
+      collectionId={ result.collectionId }
+    />));
     this.setState({
       artistName: '',
-      isResultArtistReady: true,
+      loadingArtists: false,
     });
-    return resultArtistSearch;
+    return artistsCard;
   }
 
   // funções da pesquisa do artista fim

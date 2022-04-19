@@ -11,7 +11,6 @@ export default class Search extends Component {
       handleSerch,
       loadingArtists,
       artistSearched,
-      isResultArtistReady,
     } = this.props;
 
     const inputTag = (
@@ -24,26 +23,28 @@ export default class Search extends Component {
         onChange={ handleSerch }
       />);
 
-    const formTag = (
-      <form>
-        <label htmlFor="artistName">
-          {loadingArtists ? <Loading /> : inputTag}
-        </label>
-        <button
-          type="submit"
-          data-testid="search-artist-button"
-          disabled={ isSerchDisable }
-          onClick={ onClickArtistSerch }
-        >
-          Pesquisar
-
-        </button>
-      </form>);
-
     return (
       <div data-testid="page-search">
         <h1>Pesquisa</h1>
-        {isResultArtistReady ?  : formTag }
+        <form>
+          <label htmlFor="artistName">
+            {loadingArtists ? <Loading /> : inputTag}
+          </label>
+          <button
+            type="submit"
+            data-testid="search-artist-button"
+            disabled={ isSerchDisable }
+            onClick={ onClickArtistSerch }
+          >
+            Pesquisar
+
+          </button>
+        </form>
+        <h1>
+          Resultado de álbuns de:
+          { artistSearched }
+        </h1>
+        
       </div>
     );
   }
