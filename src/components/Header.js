@@ -40,9 +40,9 @@ export default class Header extends Component {
         {loading && <Loading />}
         {hasNameLoaded && <div data-testid="header-user-name">{ userName }</div>}
         <nav>
-          <Link to="/search"> Pesquisa</Link>
-          <Link to="/album/:id"> Favoritas </Link>
-          <Link to="/profile"> Perfil </Link>
+          <Link to="/search" data-testid="link-to-search"> Pesquisa</Link>
+          <Link to="/favorites" data-testid="link-to-favorites"> Favoritas </Link>
+          <Link to="/profile" data-testid="link-to-profile"> Perfil </Link>
         </nav>
       </header>
     );

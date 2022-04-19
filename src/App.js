@@ -10,6 +10,7 @@ import NotFound from './components/pages/NotFound';
 import { createUser } from './services/userAPI';
 import Loading from './components/pages/Loading';
 import Header from './components/Header';
+import searchAlbumAPI from './services/searchAlbumsAPI';
 
 export default class App extends Component {
   constructor() {
@@ -20,8 +21,50 @@ export default class App extends Component {
       isButtomDisable: true,
       loading: false,
       hasbuttonClicked: false,
+      isSerchDisable: true,
+      artistName: '',
+      artistSearched: '',
+      loadingArtists: false,
+      isResultArtistReady: false,
     };
   }
+
+  // funções da pesquisa do artista inicio
+
+  handleSerch = ({ target }) => {
+    const { name, value } = target;
+
+    this.setState({
+      [name]: value,
+    }, () => {
+      const { artistName } = this.state;
+      const NUMBER_TWO = 2;
+      if (artistName.length >= NUMBER_TWO) {
+        this.setState({
+          isSerchDisable: false,
+        });
+      }
+    });
+  }
+
+  onClickArtistSerch = async () => {
+    const { artistName } = this.state;
+    this.setState({
+      loadingArtists: true,
+      artistSearched: artistName,
+    });
+    const resultArtistSearch = await searchAlbumAPI(artistName);
+    const artistsCard = resultArtistSearch.map((result) => (<))
+    this.setState({
+      artistName: '',
+      isResultArtistReady: true,
+    });
+    return resultArtistSearch;
+  }
+
+  // funções da pesquisa do artista fim
+
+  // funções do login inicio
 
   handleLogin = ({ target }) => {
     const { name, value } = target;
@@ -48,6 +91,7 @@ export default class App extends Component {
 
     this.setState({ hasbuttonClicked: true });
   }
+  // funções do login fim
 
   render() {
     const {
@@ -55,6 +99,11 @@ export default class App extends Component {
       isButtomDisable,
       loading,
       hasbuttonClicked,
+      isSerchDisable,
+      artistName,
+      artistSearched,
+      loadingArtists,
+      isResultArtistReady,
     } = this.state;
 
     const loginJSX = (<Login
@@ -72,7 +121,15 @@ export default class App extends Component {
         </Route>
         <Route path="/search">
           <Header />
-          <Search />
+          <Search
+            isSerchDisable={ isSerchDisable }
+            artistName={ artistName }
+            onClickArtistSerch={ this.onClickArtistSerch }
+            loadingArtists={ loadingArtists }
+            artistSearched={ artistSearched }
+            isResultArtistReady={ isResultArtistReady }
+            handleSerch={ this.handleSerch }
+          />
         </Route>
         <Route path="/album/:id">
           <Header />
