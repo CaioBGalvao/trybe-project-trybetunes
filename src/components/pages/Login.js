@@ -8,6 +8,7 @@ export default class Login extends Component {
       user,
       isButtomDisable,
       handleLogin,
+      onClickLogin,
     } = this.props;
     return (
       <div data-testid="page-login">
@@ -28,6 +29,7 @@ export default class Login extends Component {
             type="submit"
             data-testid="login-submit-button"
             disabled={ isButtomDisable }
+            onClick={ onClickLogin }
           >
             Entrar
 
@@ -41,5 +43,6 @@ export default class Login extends Component {
 Login.propTypes = {
   user: PropTypes.string.isRequired,
   handleLogin: PropTypes.func.isRequired,
+  onClickLogin: PropTypes.func.isRequired,
   isButtomDisable: PropTypes.bool.isRequired,
 };

@@ -4,7 +4,7 @@ export default class Profile extends Component {
   render() {
     return (
       <div data-testid="page-profile">
-        <h1>Login</h1>
+        <h1>Perfil</h1>
       </div>
     );
   }

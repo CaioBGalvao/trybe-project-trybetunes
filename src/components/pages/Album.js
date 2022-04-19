@@ -4,7 +4,7 @@ export default class Album extends Component {
   render() {
     return (
       <div data-testid="page-album">
-        <h1>Login</h1>
+        <h1>Album</h1>
       </div>
     );
   }
