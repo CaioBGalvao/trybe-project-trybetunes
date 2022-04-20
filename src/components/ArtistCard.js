@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default class ArtistCard extends Component {
   render() {
@@ -11,12 +11,15 @@ export default class ArtistCard extends Component {
       collectionId,
     } = this.props;
     return (
-      <section 
-      data-testid={ `link-to-album-${collectionId}` }
-      onClick={  }
-      >
+      <section>
         <img src={ artistImage } alt={ `Album do ${artistName}` } />
-        <p>{artistAlbum}</p>
+        <Link
+          to={ `/album/${collectionId}` }
+          data-testid={ `link-to-album-${collectionId}` }
+        >
+          <p>{artistAlbum}</p>
+
+        </Link>
         <p>{artistName}</p>
       </section>
     );

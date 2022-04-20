@@ -11,7 +11,6 @@ import { createUser } from './services/userAPI';
 import Loading from './components/pages/Loading';
 import Header from './components/Header';
 import searchAlbumAPI from './services/searchAlbumsAPI';
-import ArtistCard from './components/ArtistCard';
 
 export default class App extends Component {
   constructor() {
@@ -24,9 +23,10 @@ export default class App extends Component {
       hasbuttonClicked: false,
       isSerchDisable: true,
       artistName: '',
-      artistSearched: '',
       loadingArtists: false,
       isResultArtistReady: false,
+      resultArtistSearch: [],
+      artistNameFixado: '',
     };
   }
 
@@ -52,21 +52,15 @@ export default class App extends Component {
     const { artistName } = this.state;
     this.setState({
       loadingArtists: true,
-      artistSearched: artistName,
+      artistNameFixado: artistName,
     });
     const resultArtistSearch = await searchAlbumAPI(artistName);
-    const artistsCard = resultArtistSearch.map((result, index) => (<ArtistCard
-      key={ index }
-      artistImage={ result.artworkUrl100 }
-      artistAlbum={ result.artistName }
-      artistName={ result.collectionName }
-      collectionId={ result.collectionId }
-    />));
     this.setState({
       artistName: '',
+      resultArtistSearch,
+      isResultArtistReady: true,
       loadingArtists: false,
     });
-    return artistsCard;
   }
 
   // funções da pesquisa do artista fim
@@ -108,9 +102,10 @@ export default class App extends Component {
       hasbuttonClicked,
       isSerchDisable,
       artistName,
-      artistSearched,
       loadingArtists,
       isResultArtistReady,
+      resultArtistSearch,
+      artistNameFixado,
     } = this.state;
 
     const loginJSX = (<Login
@@ -133,15 +128,21 @@ export default class App extends Component {
             artistName={ artistName }
             onClickArtistSerch={ this.onClickArtistSerch }
             loadingArtists={ loadingArtists }
-            artistSearched={ artistSearched }
             isResultArtistReady={ isResultArtistReady }
             handleSerch={ this.handleSerch }
+            resultArtistSearch={ resultArtistSearch }
+            artistNameFixado={ artistNameFixado }
           />
         </Route>
-        <Route path="/album/:id">
-          <Header />
-          <Album />
-        </Route>
+        <Route
+          path="/album/:id"
+          render={ (props) => (
+            <>
+              <Header />
+              <Album { ...props } />
+            </>
+          ) }
+        />
         <Route path="/favorites">
           <Header />
           <Favorites />
