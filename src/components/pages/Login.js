@@ -26,7 +26,7 @@ export default class Login extends Component {
             />
           </label>
           <button
-            type="submit"
+            type="button"
             data-testid="login-submit-button"
             disabled={ isButtomDisable }
             onClick={ onClickLogin }

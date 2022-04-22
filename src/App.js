@@ -30,6 +30,31 @@ export default class App extends Component {
     };
   }
 
+  // funções do login inicio
+
+  handleLogin = ({ target }) => {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    }, () => {
+      const { user } = this.state;
+      const NUMBER_THREE = 3;
+      if (user.length >= NUMBER_THREE) {
+        this.setState({
+          isButtomDisable: false,
+        });
+      }
+    });
+  }
+
+  onClickLogin = async () => {
+    const { user } = this.state;
+    this.setState({ loading: true });
+    await createUser({ name: user });
+    this.setState({ hasbuttonClicked: true });
+  }
+  // funções do login fim
+
   // funções da pesquisa do artista inicio
 
   handleSerch = ({ target }) => {
@@ -64,35 +89,6 @@ export default class App extends Component {
   }
 
   // funções da pesquisa do artista fim
-
-  // funções do login inicio
-
-  handleLogin = ({ target }) => {
-    const { name, value } = target;
-
-    this.setState({
-      [name]: value,
-    }, () => {
-      const { user } = this.state;
-      const NUMBER_THREE = 3;
-      if (user.length >= NUMBER_THREE) {
-        this.setState({
-          isButtomDisable: false,
-        });
-      }
-    });
-  }
-
-  onClickLogin = async () => {
-    const { user } = this.state;
-
-    this.setState({ loading: true });
-
-    await createUser({ name: user });
-
-    this.setState({ hasbuttonClicked: true });
-  }
-  // funções do login fim
 
   render() {
     const {
@@ -139,7 +135,9 @@ export default class App extends Component {
           render={ (props) => (
             <>
               <Header />
-              <Album { ...props } />
+              <Album
+                { ...props }
+              />
             </>
           ) }
         />
